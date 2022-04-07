@@ -1,65 +1,75 @@
-
-import { useState } from "react";
+import { useState } from "react"
 
 function App() {
 
-  const [inputState, setInputState] = useState({
-    titulo: "",
-    fecha: "",
-    nota: "",
-  });
- 
+ const [inputState, setInputState] = useState({
+   titulo: "", 
+   fecha: "", 
+   nota: "",
+ });
 
-  const handleInputChange = (event) => { 
-  // console.log(event.target); 
-    setInputState ({ 
+
+  const handleInputChange = (event) => {
+    setInputState({
       ...inputState,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
-   
-   };
+      
+  };
 
+  const handleResetChange = () => {
+    setInputState({
+      ...inputState,
+    titulo: "", 
+    fecha: "", 
+    nota: ""
+  });
+  console.log(handleResetChange);
+  };
 
   return (
-    <div className="App m-4">
-      
-        <h1>Notas</h1>
-        <label htmlFor="titulo" className="pe-4">Titulo </label> 
-        <input 
-        id="titulo" 
-        name="titulo" 
-        type="text" 
-        onChange={handleInputChange} 
-        value={inputState.titulo}
-        />
-        <br/><br/>
-
-        <label htmlFor="fecha" className="pe-4">Fecha </label> 
-        <input 
-        id="fecha" 
-        name="fecha" 
-        type="text" 
-        onChange={handleInputChange} 
-        value={inputState.fecha} 
-        />
-        <br/><br/>
-
-      <label htmlFor="nota" className="pe-4">Nota</label> 
-        <input 
-        id="nota" 
-        name="nota" 
-        type="text" 
-        onChange={handleInputChange} 
-        value={inputState.nota}
-        />
-        <br/>
-        <br/>
-        
-
-        <center>
-          <img src="https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/styles/hc_1440x810/public/media/image/2021/08/genshin-impact-baal-2450371.jpg?itok=k0Sz5OGv" height={250} alt="" />
-        </center>
-        <style>{'body { background-color:  #d8c4ff  ; }'}</style>
+    <div className="App">
+      <h3>Notas</h3>
+      <label htmlfor = "titulo">Titulo</label>
+      <input 
+        id = "titulo" 
+        name = "titulo" 
+        type = "text" 
+        onChange = {handleInputChange}
+        value = {inputState.titulo}
+      />
+      <br></br> <br />
+      <label htmlfor = "fecha">Fecha</label>
+      <input 
+        id = "fecha"
+        name = "fecha" 
+        type = "text" 
+        onChange = {handleInputChange}
+        value = {inputState.fecha}
+      />
+      <br></br><br />
+      <label htmlfor = "nota">Nota</label>
+      <input 
+        id = "nota" 
+        name = "nota" 
+        type = "text" 
+        onChange = {handleInputChange}
+        value = {inputState.nota}
+      />
+<br /><br />
+      <center>
+        <button
+          type="button" 
+          className="btn btn-primary mx-2" 
+          onClick={handleResetChange}
+          style={{marginLeft:"15px"}}
+        >Borrar
+    </button>
+      </center>
+    <br />
+    <center>
+      <img src="https://1.bp.blogspot.com/-JOCWKg_-5EE/YDcZSvO_eQI/AAAAAAAAqY8/3gqUC3SRawQgP9nK3tS5U0-isOEiO15hQCLcBGAsYHQ/w1200-h630-p-k-no-nu/Episodios-Horimiya-Relleno-Orden-Cronologico.jpgD" width={550} alt="" />
+    </center>
 
     </div>
   );

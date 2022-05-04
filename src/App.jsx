@@ -1,11 +1,15 @@
 import { useState } from "react";
 
 function App() {
+
   const [inputState, setInputState] = useState({
     titulo: "",
     fecha: "",
     nota: "",
   });
+
+  const initialState = JSON.parse(localStorage.getItem("notas")) || [];
+  const [notas, setNotas] = useState(initialState);
 
   const handleInputChange = (event) => {
     setInputState({
@@ -24,11 +28,9 @@ function App() {
     console.log(handleResetChange);
   };
 
-  let arregloNotas = JSON.parse(localStorage.getItem("notas")) || [];
-
   const handleClickGuardar = () => {
-    arregloNotas.push(inputState);
-    localStorage.setItem("notas", JSON.stringify(arregloNotas));
+    setNotas([...notas, inputState])
+    localStorage.setItem("notas", JSON.stringify(notas));
     handleResetChange();
   };
 
@@ -36,31 +38,31 @@ function App() {
   const handleBorrarNota = (index) => {
     const nuevoArreglo = [];
 
-    arregloNotas.forEach((nota, i) => {
-      if (i !== index){
+    notas.forEach((nota, i) => {
+      if (index !== i){
         nuevoArreglo.push(nota);
       }
     });
     localStorage.setItem("notas", JSON.stringify(nuevoArreglo));
-    arregloNotas = [...nuevoArreglo];
+    setNotas([...nuevoArreglo]);
 
   };
 
   return (
     <div className=" App container mt-4">
       <div className="row  ">
-        <div className="row card shadow">
+        <div className="row card shadow"> 
           <div className="col p-4">
             <h3 className="text-center bi bi-card-list">Lista</h3>
 
-            {arregloNotas.length === 0 ?
+            {notas.length === 0 ?
               "Al momento no tienes notas guardadas. Puedes crear una en el formulario contiguo"
             :
             (
               <ol>
-                {arregloNotas.map((item, index)=>{
+                {notas.map((item, index)=>{
                   return (
-                    <li>
+                    <li key={index}>
                       {item.titulo} ({item.fecha}) {item.nota} &nbsp;
                       <i className="bi bi-x-circle-fill"
                       onClick={() => handleBorrarNota(index)}
@@ -113,10 +115,9 @@ function App() {
             <br />
             <label style={{ width: "100%" }}>
               Nota
-              <input
+              <textarea
                 id="nota"
                 name="nota"
-                type="text"
                 style={{ width: "100%" }}
                 onChange={handleInputChange}
                 value={inputState.nota}

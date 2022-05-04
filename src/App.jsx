@@ -32,28 +32,46 @@ function App() {
     handleResetChange();
   };
 
+
+  const handleBorrarNota = (index) => {
+    const nuevoArreglo = [];
+
+    arregloNotas.forEach((nota, i) => {
+      if (i !== index){
+        nuevoArreglo.push(nota);
+      }
+    });
+    localStorage.setItem("notas", JSON.stringify(nuevoArreglo));
+    arregloNotas = [...nuevoArreglo];
+
+  };
+
   return (
-    <div className="App container">
+    <div className=" App container mt-4">
       <div className="row  ">
-        <div className="row">
+        <div className="row card shadow">
           <div className="col p-4">
-            <h3 className="text-center">Lista</h3>
+            <h3 className="text-center bi bi-card-list">Lista</h3>
+
             {arregloNotas.length === 0 ?
               "Al momento no tienes notas guardadas. Puedes crear una en el formulario contiguo"
             :
             (
               <ol>
-                {arregloNotas.map((item)=>{
+                {arregloNotas.map((item, index)=>{
                   return (
                     <li>
-                      {item.titulo} ({item.fecha}) ({item.nota})
+                      {item.titulo} ({item.fecha}) {item.nota} &nbsp;
+                      <i className="bi bi-x-circle-fill"
+                      onClick={() => handleBorrarNota(index)}
+                      style={{color: "red", cursor:"pointer"}}></i>
                     </li>
+                    
                   )
                 })}
               </ol>
             )
             }
-
             {/* {arregloNotas.length !== 0 &&(
               <ol>
                 {arregloNotas.map((item)=>{
@@ -67,7 +85,7 @@ function App() {
             )} */}
           </div>
           <div className="col text-center mx-auto p-4">
-            <h3>Notas</h3>
+            <h3 className="bi bi-file-earmark-plus-fill">Notas</h3>
             <label className="mb-2" style={{ width: "100%" }}>
               Titulo
               <input
@@ -114,7 +132,8 @@ function App() {
                     onClick={handleResetChange}
                     style={{ marginLeft: "15px" }}
                   >
-                    Borrar
+                    <i class="bi bi-trash-fill" style={{color: "red"}}></i>
+                     Borrar
                   </button>
                 </span>
               </div>
@@ -127,7 +146,7 @@ function App() {
                     onClick={handleClickGuardar}
                     style={{ marginLeft: "15px" }}
                   >
-                    Guardar
+                   <i class="bi bi-save-fill"style={{color: "red", fontSize:"0.75rem", cursor:"pointer"}}></i>  Guardar
                   </button>
                 </span>
               </div>

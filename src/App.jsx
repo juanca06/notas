@@ -29,7 +29,7 @@ function App() {
 
   const handleClickGuardar = () => {
     setNotas([...notas, inputState]);
-    localStorage.setItem("notas", JSON.stringify(notas));
+    localStorage.setItem("notas", JSON.stringify([...notas, inputState]));
     handleResetChange();
   };
 
@@ -51,6 +51,10 @@ function App() {
   
   };
 
+  const handleClickNota = (index) => {
+    setInputState({...notas[index]})
+  }
+
   return (
     <div className=" App container mt-4">
       <div className="row  ">
@@ -64,7 +68,7 @@ function App() {
               <ol>
                 {notas.map((item, index) => {
                   return (
-                    <li key={index}>
+                    <li key={index} onClick={() => handleClickNota(index)}>
                       {item.titulo} ({item.fecha}) {item.nota} &nbsp;
                       <i
                         className="bi bi-x-circle-fill "
